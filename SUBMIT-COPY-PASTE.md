@@ -42,7 +42,7 @@ docker
 
 ## 4) "Try it out" links
 ```
-https://github.com/<<your-username>>/agriwatch
+https://github.com/m3nnoun/agriwatch
 ```
 (Add a second link if you deploy to Vercel: `https://<<your-app>>.vercel.app`)
 
