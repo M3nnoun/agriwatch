@@ -13,6 +13,7 @@
     "setup": "prisma generate && prisma db push && prisma db seed",
     "db:generate:postgres": "prisma generate --schema prisma/schema.postgres.prisma",
     "db:push:postgres": "prisma db push --schema prisma/schema.postgres.prisma --skip-generate --accept-data-loss",
+    "vercel-build": "prisma generate --schema prisma/schema.postgres.prisma && next build",
     "postinstall": "prisma generate"
   },
   "prisma": {

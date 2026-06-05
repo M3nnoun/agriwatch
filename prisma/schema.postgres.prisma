@@ -1,4 +1,4 @@
-// PostgreSQL + PostGIS schema — used by Docker / production.
+// PostgreSQL schema — used by Neon / Docker / production.
 // Generate/push with:  prisma <cmd> --schema prisma/schema.postgres.prisma
 //
 // Mirrors prisma/schema.prisma (SQLite). Enum-like columns are stored as
@@ -6,14 +6,14 @@
 // values are enforced in TypeScript (see lib/types.ts).
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["postgresqlExtensions"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider   = "postgresql"
-  url        = env("DATABASE_URL")
-  extensions = [postgis]
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // For pooled providers (Neon -pooler, Supabase), add a direct URL for migrations:
+  // directUrl = env("DIRECT_URL")
 }
 
 model Farmer {

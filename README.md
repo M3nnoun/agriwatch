@@ -130,4 +130,34 @@ See [`.env.example`](./.env.example). Only `DATABASE_URL` and `ANTHROPIC_API_KEY
 
 ---
 
+## ☁️ Deploy to Vercel + Neon (Postgres)
+
+The app uses **SQLite locally** (zero-setup) and **Neon Postgres in production**. One codebase — only
+the connection string changes.
+
+**1. Create the database on Neon**
+- Create a Neon project (**PostgreSQL 17**), then open the **SQL Editor** and run
+  [`prisma/neon-setup.sql`](./prisma/neon-setup.sql). It creates all tables **and** seeds the 8 demo
+  farmers in one go (works over HTTPS — no special ports needed).
+
+**2. Deploy on Vercel**
+- Import the GitHub repo at [vercel.com/new](https://vercel.com/new).
+- Add **Environment Variables** (values are in your local, git-ignored `.env.vercel.local`):
+
+  | Key | Value |
+  | --- | --- |
+  | `DATABASE_URL` | your Neon connection string (`postgresql://…?sslmode=require`) |
+  | `DEMO_MODE` | `true` |
+  | `NEXT_PUBLIC_DEMO_MODE` | `true` |
+  | `ANTHROPIC_API_KEY` | *(optional — live Claude alerts; otherwise a localized fallback streams)* |
+
+- Vercel runs the **`vercel-build`** script, which generates the **Postgres** Prisma client and builds.
+  No extra config needed.
+
+> **Note:** `next build` itself never connects to the database, so the build always succeeds. Neon is
+> only reached at runtime (Vercel's network reaches Neon's port 5432 fine). For high traffic, switch
+> `DATABASE_URL` to Neon's **pooled** (`-pooler`) endpoint.
+
+---
+
 Built for farmers who deserve to know what's coming — and to be made whole when it arrives.
