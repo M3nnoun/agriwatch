@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* AgriWatch brand system — emerald/green "ground truth from orbit" */
+  --brand: #2bd17e; /* spring emerald — primary */
+  --brand-strong: #11a765; /* deeper emerald */
+  --brand-deep: #0a5c3a;
+  --lime: #c6f24e; /* signal highlight (sparingly) */
+  --amber: #f6b53c; /* risk / warning */
+  --danger: #ff5d5d;
+
+  --bg: #07120d; /* near-black field at night */
+  --bg-soft: #0b1a13;
+  --panel: #0e2118;
+  --ink: #eaf3ed;
+  --muted: #8fa89a;
+  --line: rgba(150, 220, 180, 0.12);
+
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #07120d;
+}
+::-webkit-scrollbar-thumb {
+  background: #1b3a2b;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #245038;
+}
+
+::selection {
+  background: var(--brand);
+  color: #042015;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .font-display {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+  }
+  .font-mono-ui {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+  }
+  .text-brand {
+    color: var(--brand);
+  }
+  .bg-brand {
+    background-color: var(--brand);
+  }
+
+  /* Atmospheric grain overlay */
+  .grain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Orbital / topographic grid */
+  .field-grid {
+    background-image:
+      linear-gradient(rgba(43, 209, 126, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(43, 209, 126, 0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
+  }
+
+  .glow-brand {
+    box-shadow:
+      0 0 0 1px rgba(43, 209, 126, 0.25),
+      0 20px 60px -20px rgba(43, 209, 126, 0.45);
+  }
+}
+
+/* --- Motion --------------------------------------------------------------- */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatY {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes pulseRing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(43, 209, 126, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 18px rgba(43, 209, 126, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(43, 209, 126, 0);
+  }
+}
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes barRise {
+  from {
+    transform: scaleY(0.05);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* Page-load reveal (hero) */
+.rise {
+  opacity: 0;
+  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Scroll reveal (set by Reveal client component) */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}

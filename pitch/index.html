@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgriWatch — Pitch</title>
+
+    <!-- Reveal.js core -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --brand: #2bd17e;
+        --brand-strong: #11a765;
+        --lime: #c6f24e;
+        --amber: #f6b53c;
+        --danger: #ff5d5d;
+        --bg: #07120d;
+        --bg2: #0b1a13;
+        --ink: #eaf3ed;
+        --muted: #8fa89a;
+        --line: rgba(150, 220, 180, 0.14);
+        --r-main-font: 'Outfit', sans-serif;
+        --r-heading-font: 'Fraunces', serif;
+      }
+
+      .reveal {
+        font-family: var(--r-main-font);
+        font-size: 30px;
+        color: var(--ink);
+        font-weight: 300;
+      }
+
+      /* Background atmosphere */
+      .reveal-viewport {
+        background:
+          radial-gradient(60% 50% at 50% 0%, rgba(43, 209, 126, 0.16), transparent 70%),
+          radial-gradient(50% 50% at 90% 100%, rgba(198, 242, 78, 0.08), transparent 70%),
+          var(--bg);
+      }
+      .reveal .slides section {
+        text-align: left;
+        height: 100%;
+      }
+
+      .reveal h1,
+      .reveal h2,
+      .reveal h3 {
+        font-family: var(--r-heading-font);
+        color: var(--ink);
+        font-weight: 600;
+        text-transform: none;
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+        margin: 0 0 0.4em;
+      }
+      .reveal h1 {
+        font-size: 2.5em;
+      }
+      .reveal h2 {
+        font-size: 1.7em;
+      }
+      .reveal h3 {
+        font-size: 1.1em;
+      }
+      .reveal p {
+        line-height: 1.5;
+      }
+      .reveal strong {
+        color: #fff;
+        font-weight: 600;
+      }
+      .reveal em {
+        color: var(--brand);
+        font-style: normal;
+        font-weight: 500;
+      }
+      .reveal a {
+        color: var(--brand);
+      }
+
+      .accent {
+        color: var(--brand);
+      }
+      .lime {
+        color: var(--lime);
+      }
+      .amber {
+        color: var(--amber);
+      }
+      .danger {
+        color: var(--danger);
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .mono {
+        font-family: 'JetBrains Mono', monospace;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.5em;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--brand);
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+      }
+      .eyebrow::before {
+        content: '';
+        width: 10px;
+        height: 10px;
+        border-radius: 9999px;
+        background: var(--brand);
+        box-shadow: 0 0 14px var(--brand);
+      }
+
+      .reveal .badge {
+        display: inline-block;
+        padding: 0.35em 0.9em;
+        border: 1px solid var(--line);
+        border-radius: 9999px;
+        font-size: 0.5em;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .lead {
+        font-size: 1.15em;
+        color: var(--muted);
+        font-weight: 300;
+        max-width: 18em;
+      }
+
+      /* Brand mark */
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: var(--r-heading-font);
+        font-weight: 600;
+      }
+      .brand .mark {
+        width: 1.4em;
+        height: 1.4em;
+        display: grid;
+        place-items: center;
+        border-radius: 0.45em;
+        background: var(--brand);
+        color: #04150d;
+        font-size: 0.9em;
+      }
+
+      /* Layout helpers */
+      .center {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+      }
+      .row {
+        display: flex;
+        gap: 2.2rem;
+        align-items: center;
+      }
+      .cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.2rem;
+        align-items: center;
+        height: 100%;
+      }
+
+      /* Big numbers / stats */
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        overflow: hidden;
+      }
+      .stat {
+        background: var(--bg);
+        padding: 1.1rem 1.3rem;
+      }
+      .stat .num {
+        font-family: var(--r-heading-font);
+        font-size: 2.4em;
+        font-weight: 600;
+        color: #fff;
+        line-height: 1;
+      }
+      .stat .lbl {
+        color: var(--muted);
+        font-size: 0.6em;
+        margin-top: 0.5rem;
+      }
+
+      /* Pillars */
+      .pillars {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+      }
+      .pillar {
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(43, 209, 126, 0.06), rgba(255, 255, 255, 0.01));
+        border-radius: 16px;
+        padding: 1.4rem;
+      }
+      .pillar .ic {
+        font-size: 1.6em;
+      }
+      .pillar h3 {
+        margin: 0.5rem 0 0.3rem;
+        color: var(--brand);
+      }
+      .pillar p {
+        font-size: 0.62em;
+        color: var(--muted);
+        margin: 0;
+      }
+
+      /* Flow */
+      .flow {
+        display: flex;
+        align-items: stretch;
+        gap: 0.8rem;
+        font-size: 0.62em;
+      }
+      .flow .node {
+        flex: 1;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .flow .node .t {
+        color: var(--brand);
+        font-weight: 600;
+        font-family: var(--r-heading-font);
+      }
+      .flow .arrow {
+        align-self: center;
+        color: var(--brand);
+        font-size: 1.6em;
+      }
+
+      /* Cards list */
+      .list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .list li {
+        display: flex;
+        gap: 0.7rem;
+        align-items: flex-start;
+        margin: 0.55rem 0;
+        font-size: 0.72em;
+        color: var(--ink);
+      }
+      .list li::before {
+        content: '✓';
+        color: var(--brand);
+        font-weight: 700;
+      }
+
+      /* Phone / receipt */
+      .phone {
+        width: 300px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: #06120c;
+        padding: 14px;
+        box-shadow: 0 30px 80px -30px rgba(43, 209, 126, 0.5);
+      }
+      .bubble {
+        background: #11271c;
+        border-radius: 16px 16px 16px 4px;
+        padding: 12px 14px;
+        font-size: 0.5em;
+        color: #dff3e7;
+        line-height: 1.5;
+      }
+      .receipt {
+        margin-top: 10px;
+        border: 1px solid rgba(17, 167, 101, 0.5);
+        border-radius: 16px;
+        background: linear-gradient(180deg, #0e2c1d, #091c13);
+        padding: 16px;
+      }
+      .receipt .amt {
+        font-family: var(--r-heading-font);
+        font-size: 2.1em;
+        color: var(--brand);
+        font-weight: 600;
+        line-height: 1;
+      }
+      .receipt .cap {
+        font-size: 0.46em;
+        color: var(--muted);
+      }
+      .pulse {
+        display: inline-grid;
+        place-items: center;
+        width: 1.6em;
+        height: 1.6em;
+        border-radius: 9999px;
+        background: rgba(43, 209, 126, 0.16);
+        color: var(--brand);
+        animation: pr 2.2s ease-out infinite;
+      }
+      @keyframes pr {
+        0% {
+          box-shadow: 0 0 0 0 rgba(43, 209, 126, 0.5);
+        }
+        70% {
+          box-shadow: 0 0 0 14px rgba(43, 209, 126, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(43, 209, 126, 0);
+        }
+      }
+
+      /* Pricing */
+      .tiers {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        font-size: 0.62em;
+      }
+      .tier {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 1.2rem;
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .tier.feat {
+        border-color: var(--brand);
+        background: linear-gradient(180deg, #0e2c1d, #081710);
+        box-shadow: 0 20px 60px -25px rgba(43, 209, 126, 0.6);
+      }
+      .tier .name {
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        font-size: 0.85em;
+      }
+      .tier .price {
+        font-family: var(--r-heading-font);
+        font-size: 2em;
+        color: #fff;
+        font-weight: 600;
+        margin: 0.3rem 0;
+      }
+      .tier .unit {
+        color: var(--muted);
+        font-size: 0.85em;
+      }
+
+      /* progress + footer brand */
+      .reveal .slide-number {
+        background: transparent;
+        color: var(--muted);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 14px;
+      }
+      .footer-brand {
+        position: fixed;
+        bottom: 18px;
+        left: 24px;
+        z-index: 30;
+        font-size: 14px;
+        color: var(--muted);
+        font-family: var(--r-heading-font);
+        letter-spacing: 0.02em;
+      }
+      .footer-brand b {
+        color: var(--brand);
+      }
+      .reveal .progress {
+        color: var(--brand);
+        height: 4px;
+      }
+
+      .kpi {
+        font-family: var(--r-heading-font);
+        font-weight: 600;
+        color: var(--brand);
+      }
+      .hl {
+        background: linear-gradient(transparent 60%, rgba(43, 209, 126, 0.25) 0);
+        padding: 0 0.1em;
+      }
+      .big {
+        font-family: var(--r-heading-font);
+        font-size: 5em;
+        font-weight: 600;
+        color: #fff;
+        line-height: 0.95;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="footer-brand"><b>◐</b> AgriWatch</div>
+    <div class="reveal">
+      <div class="slides">
+        <!-- 1. TITLE -->
+        <section data-background-color="#07120d">
+          <div class="center">
+            <div class="brand" style="font-size: 1.4em; margin-bottom: 2rem">
+              <span class="mark">◐</span> AgriWatch
+            </div>
+            <h1 style="font-size: 3.1em; max-width: 12em">
+              We watch your fields<br /><span class="accent">from space.</span>
+            </h1>
+            <p class="lead" style="font-size: 1.25em; max-width: 24em; margin-top: 1rem">
+              We warn farmers before the storm hits — and pay them <em>the instant</em> it does.
+            </p>
+            <p class="muted" style="margin-top: 2.5rem; font-size: 0.7em">
+              <span class="badge">Climate-resilient micro-insurance</span>
+              &nbsp; <span class="mono">Built in 48h · Next.js · Claude · Sentinel-2</span>
+            </p>
+          </div>
+          <aside class="notes">
+            Hi everyone. Imagine a farmer who loses everything to a drought — and only finds out when
+            it's already too late. That farmer is who we built AgriWatch for. We watch fields from
+            space, we warn farmers before disaster hits, and — this is the part nobody else does — we
+            pay them automatically the moment it does. I'm [name], and in the next three minutes I'll
+            show you a working product, not a slide-ware idea.
+          </aside>
+        </section>
+
+        <!-- 2. HOOK / AMARA -->
+        <section data-background-color="#07120d">
+          <div class="center">
+            <span class="eyebrow">Meet Amara</span>
+            <h2 style="max-width: 16em">
+              Amara grows millet in Senegal. This season, the rain simply <span class="danger">never came.</span>
+            </h2>
+            <p class="lead fragment" style="max-width: 26em; font-size: 1.05em">
+              By the time her crop visibly failed, it was too late to act — and like
+              <strong>3 in 4</strong> smallholders, she had <strong>no insurance</strong> to fall back on.
+            </p>
+            <p class="fragment muted" style="margin-top: 1.6rem; font-size: 0.8em">
+              One bad season → debt → kids pulled from school → hunger. <span class="accent">Every year. 500 million families.</span>
+            </p>
+          </div>
+          <aside class="notes">
+            Meet Amara. She grows millet in Senegal. This season the rains never came. By the time her
+            crop visibly failed, it was too late to do anything — and like three out of four
+            smallholder farmers, she had no insurance. For her, one bad season means debt, kids pulled
+            out of school, and hunger. This isn't rare. It happens to half a billion families, every
+            single year. Hold onto Amara — we'll come back to her.
+          </aside>
+        </section>
+
+        <!-- 3. PROBLEM STATS -->
+        <section data-background-color="#07120d">
+          <div class="center">
+            <span class="eyebrow">The gap</span>
+            <h2 style="margin-bottom: 1.5rem">The world's most important workers are its least protected.</h2>
+            <div class="stat-grid">
+              <div class="stat fragment"><div class="num">500M</div><div class="lbl">smallholder families feed the world</div></div>
+              <div class="stat fragment"><div class="num accent">70%</div><div class="lbl">of the world's food comes from them</div></div>
+              <div class="stat fragment"><div class="num amber">75%</div><div class="lbl">of their climate risk is uninsured</div></div>
+              <div class="stat fragment"><div class="num danger">31%</div><div class="lbl">have zero access to climate information</div></div>
+            </div>
+          </div>
+          <aside class="notes">
+            Let's zoom out. 500 million smallholder families. They grow 70% of the world's food. Yet
+            75% of their climate risk is completely uninsured, and nearly a third have no access to
+            climate information at all. So the people we most depend on for food are the people most
+            exposed to losing everything — with no safety net. That's a half-a-trillion-dollar
+            protection gap.
+          </aside>
+        </section>
+
+        <!-- 4. WHAT'S MISSING -->
+        <section data-background-color="#07120d">
+          <div class="center">
+            <span class="eyebrow">Why it stays broken</span>
+            <h2 style="max-width: 17em">Traditional crop insurance can't reach a $2 farmer.</h2>
+            <div class="cols" style="margin-top: 1rem">
+              <div>
+                <h3 class="danger">Today</h3>
+                <ul class="list">
+                  <li>Human inspectors visit each farm</li>
+                  <li>Paperwork, claims, weeks of delay</li>
+                  <li>Too costly for small plots → nobody offers it</li>
+                  <li>Info locked in English apps &amp; dashboards</li>
+                </ul>
+              </div>
+              <div class="fragment">
+                <h3 class="accent">What's never existed</h3>
+                <p style="font-size: 0.8em" class="muted">
+                  Satellite monitoring <em>+</em> AI early-warning <em>+</em> automatic payout —
+                  delivered over <strong>WhatsApp</strong>, in the farmer's language, on
+                  <strong>any phone</strong>, with <strong>no app</strong>.
+                </p>
+                <p style="font-size: 0.8em; margin-top: 1rem" class="accent">That's AgriWatch.</p>
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            Why hasn't someone fixed this? Because traditional insurance simply can't reach a farmer
+            with a two-dollar premium. It relies on human inspectors, claim forms, and weeks of delay —
+            economics that fall apart on a one-hectare plot. So insurers don't even offer it. What's
+            never existed is the combination: satellite monitoring, plus AI early-warning, plus an
+            automatic payout — delivered over WhatsApp, in the farmer's own language, on any phone,
+            with no app to install. That combination is AgriWatch.
+          </aside>
+        </section>
+
+        <!-- 5. SOLUTION -->
+        <section data-background-color="#07120d">
+          <div class="center">
+            <span class="eyebrow">The solution</span>
+            <h2 style="margin-bottom: 1.6rem">Three moves: <span class="accent">Watch · Warn · Pay.</span></h2>
+            <div class="pillars">
+              <div class="pillar fragment">
+                <div class="ic">🛰️</div>
+                <h3>Watch</h3>
+                <p>Every farm monitored from orbit — crop health (NDVI) + rainfall, continuously.</p>
+              </div>
+              <div class="pillar fragment">
+                <div class="ic">📡</div>
+                <h3>Warn</h3>
+                <p>Claude writes a clear alert in the farmer's language with 3 concrete actions.</p>
+              </div>
+              <div class="pillar fragment">
+                <div class="ic">💵</div>
+                <h3>Pay</h3>
+                <p>Drought confirmed → a parametric payout hits their mobile money in seconds.</p>
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            AgriWatch does three things. We Watch: every farm is monitored from orbit — crop health
+            and rainfall, continuously and automatically. We Warn: when risk climbs, Claude writes a
+            warm, simple alert in the farmer's own language with three specific actions to take. And we
+            Pay: when drought is confirmed, an automatic payout lands in their mobile money in seconds.
+            Watch, warn, pay. Let me show you the moment that makes this special.
+          </aside>
+        </section>
+
+        <!-- 6. HOW IT WORKS -->
+        <section data-background-color="#07120d">
+          <div class="center">
+            <span class="eyebrow">Under the hood</span>
+            <h2 style="margin-bottom: 1.6rem">Data becomes a decision becomes a payout.</h2>
+            <div class="flow">
+              <div class="node fragment"><div class="t">Sentinel-2</div><div class="muted">NDVI crop health from space</div></div>
+              <div class="arrow fragment">→</div>
+              <div class="node fragment"><div class="t">NASA + Open-Meteo</div><div class="muted">Rainfall &amp; 14-day forecast</div></div>
+              <div class="arrow fragment">→</div>
+              <div class="node fragment"><div class="t">Risk engine</div><div class="muted">FAO thresholds → 0–100 score</div></div>
+              <div class="arrow fragment">→</div>
+              <div class="node fragment"><div class="t">Claude + payout</div><div class="muted">Alert + M-Pesa, auto</div></div>
+            </div>
+            <p class="fragment muted" style="margin-top: 1.8rem; font-size: 0.66em">
+              <span class="accent mono">Parametric:</span> the measurement <em>is</em> the trigger — no claim, no inspector. That's why it's instant <em>and</em> cheap.
+            </p>
+          </div>
+          <aside class="notes">
+            Here's how. We pull crop-health imagery from Sentinel-2 satellites, combine it with
+            rainfall and forecast data from NASA and Open-Meteo, and score drought risk using published
+            FAO thresholds for each crop. If the score crosses the line, Claude writes the alert and
+            the payout fires automatically. The key word is parametric: the measurement itself is the
+            trigger. No claim form, no inspector visiting the field. That's why AgriWatch can be both
+            instant and cheap enough to reach everyone.
+          </aside>
+        </section>
+
+        <!-- 7. THE MAGIC MOMENT -->
+        <section data-background-color="#06100b">
+          <div class="cols">
+            <div>
+              <span class="eyebrow">The moment that matters</span>
+              <h2 style="font-size: 2em">
+                $15 reaches Amara's phone <span class="accent">the second</span> the satellite confirms drought.
+              </h2>
+              <p class="muted fragment" style="font-size: 0.82em; max-width: 20em">
+                No form. No inspector. No waiting weeks while the harvest dies. <strong>This</strong> is the product — everything else just serves this moment.
+              </p>
+              <p class="fragment lime mono" style="margin-top: 1.4rem; font-size: 0.7em">▶ Live demo: /simulate</p>
+            </div>
+            <div style="display: flex; justify-content: center">
+              <div class="phone fragment">
+                <div class="bubble">
+                  <strong class="amber">⚠️ Alerte sécheresse — millet</strong><br />
+                  Bonjour Amara. Vos cultures sont en stress, très peu de pluie prévue.<br />
+                  1. Arrosez tôt le matin<br />2. Paillez le sol<br />3. Attendez la pluie
+                </div>
+                <div class="receipt fragment">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--brand); font-size: 0.5em; text-transform: uppercase; letter-spacing: 0.1em">
+                    <span class="pulse">✓</span> Payout sent
+                  </div>
+                  <div class="amt" style="margin-top: 0.4rem">$15.00</div>
+                  <div class="cap">M-Pesa (simulated)</div>
+                  <div class="cap mono" style="margin-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.5rem">Ref AW-6099C6E6 · insured</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            This is the moment. Fifteen dollars reaches Amara's phone the second the satellite confirms
+            the drought. She gets a message in French explaining what's happening and exactly what to
+            do — and then the money arrives. No form, no inspector, no waiting weeks while the harvest
+            dies. Everything else we built exists to serve this one moment. And it's not a mockup — in
+            our demo you click one button and watch this happen live, end to end.
+          </aside>
+        </section>
+
+        <!-- 8. SATELLITES NOT DRONES -->
+        <section data-background-color="#07120d">
+          <div class="center">
+            <span class="eyebrow">Why we win on scale</span>
+            <h2>Satellites, not drones.</h2>
+            <div class="cols" style="margin-top: 0.6rem">
+              <ul class="list">
+                <li>Nothing for farmers to buy, charge, or repair</li>
+                <li>One satellite pass already covers <em>thousands</em> of farms</li>
+                <li>Free, global imagery, revisited every few days</li>
+                <li>Weather data fills in on cloudy days</li>
+              </ul>
+              <p class="lead fragment" style="font-size: 0.95em">
+                A drone sees <strong>one</strong> field. A satellite sees <strong>every</strong> field —
+                for free, forever. <span class="accent">That's how you protect 500M, not 500.</span>
+              </p>
+            </div>
+          </div>
+          <aside class="notes">
+            People ask: why not drones? Because drones don't scale. A drone watches one field at a
+            time and somebody has to fly it. We use free, global satellite imagery that already
+            revisits every farm on Earth every few days — and we fuse it with weather data so clouds
+            never blind us. There's zero hardware for the farmer. A drone sees one field; a satellite
+            sees every field, for free, forever. That's how you protect five hundred million people,
+            not five hundred.
+          </aside>
+        </section>
+
+        <!-- 9. BUILT & WORKING -->
+        <section data-background-color="#07120d">
+          <div class="center">
+            <span class="eyebrow">This is real</span>
+            <h2 style="max-width: 16em">A working product — not a concept.</h2>
+            <div class="cols">
+              <ul class="list">
+                <li>Full-stack <strong>Next.js 14</strong> app, live dashboard &amp; map</li>
+                <li><strong>Claude</strong> writes alerts in 4 languages, streaming</li>
+                <li>Real satellite math (NDVI/NDWI) + FAO risk engine</li>
+                <li>One-click <strong>live</strong> drought-to-payout simulation</li>
+                <li>Runs with <strong>zero setup</strong> — SQLite, no Docker needed</li>
+              </ul>
+              <div>
+                <div class="stat-grid" style="grid-template-columns: 1fr 1fr">
+                  <div class="stat"><div class="num accent">8</div><div class="lbl">farmers seeded, 6 countries</div></div>
+                  <div class="stat"><div class="num">4</div><div class="lbl">languages: ar · sw · fr · en</div></div>
+                  <div class="stat"><div class="num lime">1-click</div><div class="lbl">satellite → payout demo</div></div>
+                  <div class="stat"><div class="num">100%</div><div class="lbl">open data &amp; APIs</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            And this is the part I'm proud of: it's real. This is a full-stack Next.js application with
+            a live dashboard and map. Claude generates the alerts in four languages, streaming token by
+            token. We compute real satellite vegetation indices and score them against FAO drought
+            thresholds. There's a one-click simulation that runs the whole satellite-to-payout flow
+            live. And it runs with zero setup. We didn't fake the demo — we built the engine.
+          </aside>
+        </section>
+
+        <!-- 10. MARKET / WHO PAYS -->
+        <section data-background-color="#07120d">
+          <div class="center">
+            <span class="eyebrow">The opportunity</span>
+            <h2 style="margin-bottom: 1.2rem">A <span class="accent">$1.2T</span> protection gap — and the buyers are already looking.</h2>
+            <div class="cols">
+              <div>
+                <p class="big">$1.2T</p>
+                <p class="muted" style="font-size: 0.7em; max-width: 13em">global agricultural protection gap — uninsured climate risk</p>
+              </div>
+              <div>
+                <h3 class="accent">Who actually pays (B2B2C)</h3>
+                <ul class="list">
+                  <li><strong>Governments &amp; development agencies</strong> subsidizing premiums</li>
+                  <li><strong>Co-ops &amp; microfinance</strong> de-risking their own loans</li>
+                  <li><strong>Reinsurers</strong> underwriting the pool — we take a tech/distribution fee</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            How big is this? The global agricultural protection gap is over a trillion dollars in
+            uninsured climate risk. And here's the smart part of the model: the farmer is the user, but
+            the farmer usually isn't the payer. Governments and development agencies subsidize
+            premiums. Co-ops and microfinance institutions pay because it de-risks the loans they've
+            already made. And reinsurers underwrite the payout pool while we earn a technology and
+            distribution fee. The buyers are already actively looking for exactly this.
+          </aside>
+        </section>
+
+        <!-- 11. BUSINESS MODEL -->
+        <section data-background-color="#07120d">
+          <div class="center">
+            <span class="eyebrow">Business model</span>
+            <h2 style="margin-bottom: 1.4rem">Tiny premiums, because payouts are automatic.</h2>
+            <div class="tiers">
+              <div class="tier">
+                <div class="name">Farmer</div>
+                <div class="price">~$3</div>
+                <div class="unit">/ season · 30-day free trial</div>
+                <ul class="list" style="margin-top: 0.8rem">
+                  <li>Monitoring + alerts</li>
+                  <li>Payout up to $15</li>
+                </ul>
+              </div>
+              <div class="tier feat">
+                <div class="name">Cooperative</div>
+                <div class="price accent">$2.50</div>
+                <div class="unit">/ farmer / season</div>
+                <ul class="list" style="margin-top: 0.8rem">
+                  <li>Bulk onboarding</li>
+                  <li>Payout up to $50</li>
+                  <li>Loan-bundling ready</li>
+                </ul>
+              </div>
+              <div class="tier">
+                <div class="name">Institution</div>
+                <div class="price">Custom</div>
+                <div class="unit">/ programme</div>
+                <ul class="list" style="margin-top: 0.8rem">
+                  <li>API + white-label</li>
+                  <li>Reinsurance integration</li>
+                </ul>
+              </div>
+            </div>
+            <p class="fragment muted" style="margin-top: 1.4rem; font-size: 0.62em">
+              Revenue = premium share + per-farm SaaS. Margin scales as satellite/AI costs are fixed across millions of farms.
+            </p>
+          </div>
+          <aside class="notes">
+            The model. Because payouts are automatic, premiums can be tiny — around three dollars a
+            season for an individual farmer, two-fifty per farmer at co-op scale, and custom programmes
+            for governments and insurers. We make money two ways: a share of the premium, and a
+            per-farm software fee. And the economics get better with scale, because the satellite and
+            AI costs are basically fixed whether we cover a thousand farms or ten million.
+          </aside>
+        </section>
+
+        <!-- 12. IMPACT -->
+        <section data-background-color="#06100b">
+          <div class="center">
+            <span class="eyebrow">Why it matters</span>
+            <h2 style="max-width: 15em">Every payout is a kid who stays in school.</h2>
+            <div class="row" style="margin-top: 1.5rem; gap: 3rem; flex-wrap: wrap">
+              <div><div class="kpi" style="font-size: 2.2em">SDG 1</div><div class="muted" style="font-size: 0.6em">No poverty</div></div>
+              <div><div class="kpi" style="font-size: 2.2em">SDG 2</div><div class="muted" style="font-size: 0.6em">Zero hunger</div></div>
+              <div><div class="kpi" style="font-size: 2.2em">SDG 13</div><div class="muted" style="font-size: 0.6em">Climate action</div></div>
+            </div>
+            <p class="lead fragment" style="margin-top: 2rem; max-width: 24em; font-size: 1em">
+              We turn a silent catastrophe into a warning and a cushion — keeping families out of the
+              debt trap, one season at a time.
+            </p>
+          </div>
+          <aside class="notes">
+            Let's be honest about why this matters. Every payout is a family that doesn't fall into the
+            debt trap. It's a kid who stays in school instead of being pulled out to work. This hits
+            three Sustainable Development Goals at once — no poverty, zero hunger, and climate action.
+            We take a silent catastrophe and turn it into a warning and a cushion, one season at a
+            time.
+          </aside>
+        </section>
+
+        <!-- 13. CLOSE -->
+        <section data-background-color="#07120d">
+          <div class="center">
+            <div class="brand" style="font-size: 1.2em; margin-bottom: 1.5rem"><span class="mark">◐</span> AgriWatch</div>
+            <h1 style="font-size: 2.7em; max-width: 13em">
+              We watch from space.<br />We warn before the storm.<br /><span class="accent">We pay when it hits.</span>
+            </h1>
+            <p class="lead" style="margin-top: 1.4rem; font-size: 1.1em; max-width: 24em">
+              The technology to protect 500 million farmers already exists. We just connected it — and made it pay.
+            </p>
+            <p class="muted" style="margin-top: 2.2rem; font-size: 0.72em">
+              <span class="badge">Try the live demo</span> &nbsp; <span class="mono accent">localhost:3000 → /simulate</span>
+            </p>
+          </div>
+          <aside class="notes">
+            So here's the whole thing in one breath: we watch from space, we warn before the storm, and
+            we pay when it hits. Everything we needed to protect half a billion farmers already
+            existed — satellites, weather data, mobile money, and now AI. We connected them, and we
+            made it pay out automatically. Come try the live demo — click one button and watch fifteen
+            dollars reach a farmer the instant the drought is confirmed. Thank you. I'd love your
+            questions.
+          </aside>
+        </section>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        transition: 'slide',
+        transitionSpeed: 'default',
+        backgroundTransition: 'fade',
+        slideNumber: 'c/t',
+        controls: true,
+        progress: true,
+        center: false,
+        plugins: [RevealNotes, RevealHighlight],
+      });
+    </script>
+  </body>
+</html>

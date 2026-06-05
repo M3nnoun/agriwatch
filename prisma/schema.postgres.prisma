@@ -1,0 +1,101 @@
+// PostgreSQL + PostGIS schema — used by Docker / production.
+// Generate/push with:  prisma <cmd> --schema prisma/schema.postgres.prisma
+//
+// Mirrors prisma/schema.prisma (SQLite). Enum-like columns are stored as
+// String so a single Prisma Client shape works across both providers; allowed
+// values are enforced in TypeScript (see lib/types.ts).
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis]
+}
+
+model Farmer {
+  id           String   @id @default(uuid())
+  phoneNumber  String   @unique
+  name         String
+  language     String   @default("en") // Language: ar | sw | fr | en
+  whatsappId   String?
+  isActive     Boolean  @default(true)
+  registeredAt DateTime @default(now())
+  farms        Farm[]
+}
+
+model Farm {
+  id              String           @id @default(uuid())
+  farmerId        String
+  farmer          Farmer           @relation(fields: [farmerId], references: [id])
+  name            String
+  cropType        String // CropType: maize | wheat | sorghum | millet | cassava | other
+  latitude        Float
+  longitude       Float
+  areaHectares    Float            @default(1.0)
+  country         String
+  region          String?
+  createdAt       DateTime         @default(now())
+  ndviReadings    NdviReading[]
+  weatherReadings WeatherReading[]
+  alerts          Alert[]
+  payouts         Payout[]
+}
+
+model NdviReading {
+  id              String   @id @default(uuid())
+  farmId          String
+  farm            Farm     @relation(fields: [farmId], references: [id])
+  readingDate     DateTime @default(now())
+  ndviMean        Float
+  ndwiMean        Float
+  seasonalAverage Float
+  anomalyPct      Float
+  cloudCoverage   Float    @default(0)
+  source          String   @default("Sentinel-2")
+}
+
+model WeatherReading {
+  id              String   @id @default(uuid())
+  farmId          String
+  farm            Farm     @relation(fields: [farmId], references: [id])
+  readingDate     DateTime @default(now())
+  rainfallMm      Float
+  tempMax         Float
+  tempMin         Float
+  soilMoisture    Float?
+  forecast14dayMm Float
+  droughtIndex    Float?
+}
+
+model Alert {
+  id             String   @id @default(uuid())
+  farmId         String
+  farm           Farm     @relation(fields: [farmId], references: [id])
+  alertType      String   @default("drought") // AlertType: drought | flood | frost | pest
+  severity       String // Severity: low | medium | high | critical
+  triggeredAt    DateTime @default(now())
+  messageSent    Boolean  @default(false)
+  messageText    String?
+  whatsappStatus String?
+  payouts        Payout[]
+}
+
+model Payout {
+  id                String   @id @default(uuid())
+  farmId            String
+  farm              Farm     @relation(fields: [farmId], references: [id])
+  alertId           String?
+  alert             Alert?   @relation(fields: [alertId], references: [id])
+  amountUsd         Float
+  triggerReason     String
+  ndviAtTrigger     Float?
+  rainfallAtTrigger Float?
+  status            String   @default("pending") // PayoutStatus: pending | sent | confirmed | failed
+  mobileMoneyRef    String?
+  method            String   @default("M-Pesa (simulated)")
+  createdAt         DateTime @default(now())
+}
